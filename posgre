@@ -1,0 +1,137 @@
+###########################################
+                  PostgreSQL
+
+###########################################
+                installPostgre
+###########################################
+
+$ sudo apt update
+$ sudo apt install postgresql postgresql-contrib
+
+###########################################
+          setup user dan password 
+###########################################
+$ sudo -i -u postgres    //switch user
+
+//sampai tulisan postgres
+
+> postgres=# alter user postgres with password '12345'; 
+
+//jgn lupa pake  ';'
+###################
+> ALTER ROLE
+
+> postgre=# /q              //untuk keluar
+
+###########################################
+
+https://howtoforge.com/how to install bla bla bla
+
+###########################################
+              add repo postgresql
+############################################
+!!!see web
+###########################################
+               install pgadmin // CLIENT
+############################################
+
+$ sudo apt update
+$ sudo apt stringinstall pgadmin4 pgadmin-apache2 -y
+
+lanjut ke pgadmin
+
+di server klik kanan create  server
+
+lalu keluar jendela baru
+
+- general tulis localhost 
+
+- connection
+
+- - host localhost   
+// ini adalah client berbeda untuk yang tadi itu server
+
+- - port 5432
+- - username postgres
+- - password '12345' //yang tadi yg alter user
+checklist di klik    laLU save
+
+DATABASES klik kanan  buat database 
+- database = 'breadDB'
+- save
+keluar daftar list
+
+- schema ada public klik
+
+- table klik kanan create table
+
+table = bread
+
+colomns 
+
+nama id 
+data type serial(integer autoincrement)
+
+stringdata 
+datatype
+charactervariying 50
+
+integerdata datatype integer
+floatdata data type numeric
+
+booleandata datatype boolean
+
+datedata datatype date
+
+save
+
+######################################################
+
+kalo mainan query klik kanan di table lalu query tool
+
+coba klik kanan lalu script insert masukin value (?,?,?,?,?) lalu run lalu masuk
+
+lalu select * from bread;
+
+dataoutput  
+
+dari id terbentuk sequence buat reset id
+
+####
+
+klo fitur functions kayak buat bahasa baru tp belajar bahasa PGpgsql pascal
+database layer terbawah
+
+#####
+
+triger function memproses berdasarkan triger ketika data dibuat dan seltelah data dibuat 
+exp: data penjualan harga barang dan jumlah 
+
+#####
+views 
+
+menselect yang sudah di select
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
