@@ -8,20 +8,26 @@ const saltRounds = 10;
 
 
 
-function isLogin (req,res,next){            //middleware check session
-  if(req.session.user){
-  next();
-  }else{
-  res.redirect('/');
+function isLogin(req, res, next) {            //middleware check session
+  if (req.session.user) {
+    next();
+  } else {
+    res.redirect('/');
   }
 }
-  
-  
+
+
 
 /* GET home page. */
 module.exports = (pool) => {
   router.get('/', function (req, res, next) {
-    res.render('login');
+    res.render('login', {LoginMessage: req.flash('loginMessage')}); // flash dipake dsni juga
+  });
+
+
+
+  router.get('/register', function (req, res, next) {
+    res.render('register') // flash dipake dsni juga
   });
 
   router.post('/register', function (req, res, next) {
@@ -40,12 +46,26 @@ module.exports = (pool) => {
 
   router.post('/login', function (req, res, next) {
     const { email, password } = req.body
-    pool.query('SELECT * FROM users WHERE email = $1', [email], (err, data) => {
+    pool.query('SELECT * FROM users WHERE email = $1', [email], (err, data) => {  //check email 
       if (err) return res.send(err)
-      if (data.rows.length == 0) return res.send('user not found')
+      if (data.rows.length == 0 ) { //saat data tidak ada
+
+        req.flash('loginMessage', 'User Not Found anjink')
+        return res.redirect('/')
+      }                                      //return res.send('user not found')         "sebelum pake flash"
+
+
       bcrypt.compare(password, data.rows[0].password, function (err, result) {
         if (err) return res.send(err)
-        if (!result) return res.send('user or password is wrong')
+        if (!result) { //saat data tidak ada
+
+          req.flash('loginMessage', 'User or Password is Wrong anjink')
+          return res.redirect('/')
+        }        
+        
+        
+        
+        //return res.send('user or password is wrong')
 
         req.session.user = data.rows[0]  //session
 
@@ -56,15 +76,15 @@ module.exports = (pool) => {
   });
 
   router.get('/home', isLogin, function (req, res, next) {
-    res.render('index', { user: req.session.user  }); //session
+    res.render('index', { user: req.session.user }); //session
   });
 
   router.get('/logout', function (req, res, next) {
-  req.session.destroy(function(err) {//session hancur atau logout
+    req.session.destroy(function (err) {//session hancur atau logout
       res.redirect("/")
       // cannot access session here
     })
-  }); 
+  });
 
 
   return router;
