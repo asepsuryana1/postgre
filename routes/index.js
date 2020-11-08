@@ -81,16 +81,7 @@ router.post('/login', function (req, res, next) {
     });
 });
 
-router.get('/home', isLogin, function (req, res, next) {
-  res.render('index', { user: req.session.user }); // merender index.js dengan permintaan sesi user
-});
 
-router.get('/logout', function (req, res, next) {
-  req.session.destroy(function (err) {             //session hancur atau logout
-    res.redirect("/")
-    // cannot access session here
-  })
-});
 
 
 return router;

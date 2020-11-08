@@ -22,6 +22,7 @@ const pool = new Pool({
 //========= module.exports = (pool) => { ....return router; }
 var indexRouter = require('./routes/index')(pool);//===================== router index need (pool)========//
 var usersRouter = require('./routes/users');
+var homeRouter = require('./routes/home');
 
 var app = express();
 
@@ -48,7 +49,7 @@ app.use(function(req, res, next) { //===== handling back button bug
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
+app.use('/home', homeRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
