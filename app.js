@@ -37,12 +37,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  secret: 'keyboard cat'   //=====================D ## session
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true //=====================D ## session
 }));
 
 app.use(flash());          //========================D ##flash
 
-app.use(function(req, res, next) { //===== handling back button bug
+app.use(function (req, res, next) { //===== handling back button bug
   res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
   next();
 });
